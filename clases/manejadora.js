@@ -2,12 +2,13 @@
 /// <reference path="./auto.ts"/>
 /// <reference path="./autoBD.ts"/>
 /// <reference path="./ajax.ts"/>
+/// <reference path="./IParte2.ts"/>
+/// <reference path="./node_modules/@types/jquery/index.d.ts">
 var PrimerParcial;
 (function (PrimerParcial) {
     class Manejadora {
         static AgregarAutoJSON() {
             let ajax = new Ajax();
-            let header = [{ "key": "content-type", "value": "application/json" }];
             let patente = document.getElementById("patente").value;
             let marca = document.getElementById("marca").value;
             let color = document.getElementById("color").value;
@@ -84,46 +85,78 @@ var PrimerParcial;
                                 <td>${auto.marca}</td>
                                 <td>${auto.color}</td>
                                 <td>${auto.precio}</td>
-                                <td><img src="./backend/autos/imagenes/${auto.pathFoto}" alt="auto" width="50px" height="50px"></td>
+                                <td><img src="../backend/autos/imagenes/${auto.pathFoto}" alt="auto" width="50px" height="50px"></td>
+                                <td>
+                                <input type="button" value="modificar" data-obj=' ${JSON.stringify(auto)} ' name="modificar">
+                                <input type="button" value="eliminar" data-obj='  ${JSON.stringify(auto)} ' data-action="eliminar">
+                                </td>
                                 </tr>`;
                     });
                     html += '</table>';
                     $("#divTabla").html(html);
-                    $('[data-action="modificar"]').on("click", function () {
-                        let objString = $(this).attr("data-obj");
-                        let obj = JSON.parse(objString);
-                        console.log(obj);
-                        $("#id").val(obj.id);
-                        $("#nombre").val(obj.nombre);
-                        $("#correo").val(obj.correo);
-                        $("#clave").val(obj.clave);
-                        $("#cboPerfiles").val(obj.id_perfil);
-                    });
                     $('[data-action="eliminar"]').on("click", function () {
                         let objString = $(this).attr("data-obj");
+                        console.log(objString);
                         let obj = JSON.parse(objString);
-                        let form = new FormData();
-                        form.append("id", obj.id);
-                        $.ajax({
-                            type: "POST",
-                            url: "./backend/EliminarUsuario.php",
-                            dataType: "text",
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-                            data: form
-                        })
-                            .done((mensaje) => {
-                            alert(mensaje);
-                            $("#btnMostrar").click();
+                        (new Manejadora()).EliminarAuto(obj);
+                    });
+                    document.getElementsByName("modificar").forEach((boton) => {
+                        boton.addEventListener("click", () => {
+                            let obj = boton.getAttribute("data-obj");
+                            Manejadora.RellenarInputs(JSON.parse(obj));
                         });
                     });
                 }
                 else {
-                    // Manejar el caso en el que no se obtuvieron datos
                     $("#divTabla").html("<p>No se encontraron usuarios.</p>");
                 }
             });
+        }
+        EliminarAuto(autoJSON) {
+            let confirmacion = confirm(`¿Desea eliminar el neumático?\nPatente: ${autoJSON.patente}\nMarca: ${autoJSON.marca}`);
+            if (confirmacion) {
+                let form = new FormData();
+                form.append("auto_json", JSON.stringify(autoJSON));
+                $.ajax({
+                    type: "POST",
+                    url: "../backend/eliminarAutoBD.php",
+                    dataType: "text",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form
+                })
+                    .done((mensaje) => {
+                    alert(mensaje);
+                    $("#btn-mostrarbd").click();
+                });
+            }
+        }
+        ModificarAuto() {
+            let ajax = new Ajax();
+            let patente = document.getElementById("patente").value;
+            let marca = document.getElementById("marca").value;
+            let color = document.getElementById("color").value;
+            let precio = document.getElementById("precio").value;
+            let auto = new Entidades.Auto(patente, marca, color, parseInt(precio));
+            let form = new FormData();
+            form.append("auto_json", auto.ToJSON());
+            ajax.Post("../backend/modificarAutoBD.php", (resultado) => {
+                alert(resultado);
+                let retorno = JSON.parse(resultado);
+                Manejadora.MostrarAutosBD();
+                console.log(retorno.mensaje);
+                alert(retorno.mensaje);
+            }, form, Manejadora.Fail);
+        }
+        static RellenarInputs(autoJSON) {
+            document.getElementById("patente").value = autoJSON.patente;
+            document.getElementById("marca").value = autoJSON.marca;
+            document.getElementById("color").value = autoJSON.color;
+            document.getElementById("precio").value = autoJSON.precio;
+        }
+        static ModificarAutoStatic() {
+            (new Manejadora).ModificarAuto();
         }
         static Fail(retorno) {
             console.error(retorno);
