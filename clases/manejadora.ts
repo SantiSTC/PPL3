@@ -1,11 +1,10 @@
 /// <reference path="./auto.ts"/>
 /// <reference path="./autoBD.ts"/>
 /// <reference path="./ajax.ts"/>
-/// <reference path="./IParte2.ts"/>
 /// <reference path="./node_modules/@types/jquery/index.d.ts">
 
 namespace PrimerParcial {
-    export class Manejadora implements IParte2{
+    export class Manejadora{
         static AgregarAutoJSON(){
             let ajax = new Ajax();
 
@@ -137,13 +136,13 @@ namespace PrimerParcial {
                     });
                     
                 } else {
-                    $("#divTabla").html("<p>No se encontraron usuarios.</p>");
+                    $("#divTabla").html("<p>No se encontraron autos.</p>");
                 }
             });
         }
 
         EliminarAuto(autoJSON : any) :void {
-            let confirmacion = confirm(`¿Desea eliminar el neumático?\nPatente: ${autoJSON.patente}\nMarca: ${autoJSON.marca}`);
+            let confirmacion = confirm(`¿Seguro que desea eliminar el auto?\nPatente: ${autoJSON.patente}\nMarca: ${autoJSON.marca}`);
 
             if(confirmacion){
                 let form = new FormData();
@@ -189,7 +188,7 @@ namespace PrimerParcial {
             }, form, Manejadora.Fail);
         }
 
-        private static RellenarInputs(autoJSON : any) :void {
+        static RellenarInputs(autoJSON : any) :void {
             (<HTMLInputElement>document.getElementById("patente")).value = autoJSON.patente;
             (<HTMLInputElement>document.getElementById("marca")).value = autoJSON.marca;
             (<HTMLInputElement>document.getElementById("color")).value = autoJSON.color;
@@ -199,6 +198,7 @@ namespace PrimerParcial {
         static ModificarAutoStatic() :void {
             (new Manejadora).ModificarAuto();
         }
+
         private static Fail(retorno:string):void 
         {
             console.error(retorno);

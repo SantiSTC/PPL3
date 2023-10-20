@@ -2,7 +2,6 @@
 /// <reference path="./auto.ts"/>
 /// <reference path="./autoBD.ts"/>
 /// <reference path="./ajax.ts"/>
-/// <reference path="./IParte2.ts"/>
 /// <reference path="./node_modules/@types/jquery/index.d.ts">
 var PrimerParcial;
 (function (PrimerParcial) {
@@ -108,12 +107,12 @@ var PrimerParcial;
                     });
                 }
                 else {
-                    $("#divTabla").html("<p>No se encontraron usuarios.</p>");
+                    $("#divTabla").html("<p>No se encontraron autos.</p>");
                 }
             });
         }
         EliminarAuto(autoJSON) {
-            let confirmacion = confirm(`¿Desea eliminar el neumático?\nPatente: ${autoJSON.patente}\nMarca: ${autoJSON.marca}`);
+            let confirmacion = confirm(`¿Seguro que desea eliminar el auto?\nPatente: ${autoJSON.patente}\nMarca: ${autoJSON.marca}`);
             if (confirmacion) {
                 let form = new FormData();
                 form.append("auto_json", JSON.stringify(autoJSON));

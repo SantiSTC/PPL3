@@ -10,8 +10,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $marca = json_decode($auto_json)->marca;
     $color = json_decode($auto_json)->color;
     $precio = json_decode($auto_json)->precio;
+    //$foto = json_decode($auto_json)->pathFoto;
     $foto = null;
-    // $foto = json_decode($auto_json)->pathFoto;
 
     if($foto != null){
         $auto = new AutoBD($patente, $marca, $color, $precio, $foto);

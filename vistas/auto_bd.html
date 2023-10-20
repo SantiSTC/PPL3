@@ -21,49 +21,46 @@
 
 </head>
 
-<body style="background-color:rgb(71, 3, 3)">
+<body style="background-color:darkgrey">
  <br>
   <div class="container" style="background-color:lightblue">
     <br>
-    <h2 style="background-color:rgb(59, 5, 129);color:rgb(217, 217, 221)">Gonzalez Fermin</h2>
+    <h2 style="background-color:gray;color:ghostwhite">Iannello Santiago</h2>
 
-    <h4>ABM - Neumáticos (JSON - BD sin foto) - Parte 1 - Parte 2</h4>
+    <h4>Autos BD</h4>
 
-      <table class="table table" style="width:95%">
+      <table class="table table" style="width:100%">
         <tr>
           <td style="width:50%">
-            <table class="table table-bordered table-hover" style="background-color:rgb(141, 186, 219)">
+            <table class="table table-bordered table-hover" style="background-color:rgb(195, 199, 202)">
               <tr>
-                <td><label class="col control-label">ID</label></td>
-                <td><input type="text" id="patente"/></td>
+                <td><label class="col control-label">Patente</label></td>
+                <td><input type="text" id="patente" /></td>
               </tr>
               <tr>
                 <td><label class="col control-label">Marca</label></td>
                 <td><input type="text" id="marca" /></td>
               </tr>
               <tr>
-                <td><label class="col control-label">Medidas</label></td>
-                <td><input type="text" id="color" /></td>
+                <td><label class="col control-label">Color</label></td>
+                <td><input type="color" id="color" value="#ff0000" /></td>
               </tr>
               <tr>
                 <td><label class="col control-label">Precio</label></td>
-                <td><input type="number" id="precio"></td>
+                <td><input type="number" id="precio" value="100000" /></td>
               </tr>
               <tr>
                 <td colspan="2" class="col">
-                  <input type="button" value="Agregar JSON" id="btn-agregar" class="btn btn-success" />
-                  <input type="button" value="Mostrar JSON" id="btn-mostrar" class="btn btn-info" />
-                  <input type="button" value="Verificar JSON" id="btn-verificar" class="btn btn-light" />
-                  <input type="button" value="Agregar sin foto" id="btn-agregarSinFoto" class="btn btn-primary"/>
-                  <input type="button" value="Mostrar BD" id="btn-mostrarbd" class="btn btn-danger" />
-                  <input type="button" value="Modificar sin foto" id="btn-modificarSinFoto" class="btn btn-dark" />
+                  <input type="button" value="AgregarBD" id="btn-agregarSinFoto" class="btn btn-success"/>
+                  <input type="button" value="MostrarBD" id="btn-mostrarbd" class="btn btn-info"/> 
+                  <input type="button" value="ModificarBD" id="btn-modificarSinFoto" class="btn btn-warning" />
+   
                 </td>
               </tr>
             </table>
           </td>
           <td>
             <div class="" style="background-color:lavenderblush;">
-              <div id="divInfo"></div>
               <div id="divTabla">
                 tabla aqu&iacute;...
               </div>
@@ -72,8 +69,8 @@
         </tr>
       </table>
 
-    <input type="hidden" id="hdnIdModificacion"><!-- PARA MODIFICAR -->
-    <!-- <div id="divSpinner" style="display:none;position:absolute"><img id="imgSpinner" src="./BACKEND/gif-load.gif" /></div>PARA EL SPINNER -->
+    <input type="hidden" id="hdnIdModificacion">
+    
   </div>
 </body>
 
